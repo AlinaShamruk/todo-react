@@ -4,13 +4,12 @@ import {
     IconButton,
     Layout,
     SideSheet,
-    Spinner,
-    TopAppBar,
     Typography
 } from 'mdc-react';
 
 import useStore from '../../hooks/store';
 
+import PageHeader from '../../components/PageHeader'
 import TodoList from '../../components/TodoList';
 import TodoForm from '../../components/TodoForm';
 import TodoDetails from '../../components/TodoDetails';
@@ -20,20 +19,7 @@ import './index.scss';
 export default function ListPage({ match }) {
     const { state, actions } = useStore();
     const [selectedTodo, setSelectedTodo] = useState(null);
-
-    // useEffect(() => {
-    //     setSelectedTodo(null);
-
-    //     if (match.params.listId) {
-    //         actions.getListTodos(match.params.listId);
-    //     } else if (match.path === '/important') {
-    //         actions.getImportantTodos(state.user.uid);
-    //     } else if (match.path === '/planned') {
-    //         actions.getPlannedTodos(state.user.uid);
-    //     } else {
-    //         actions.getTodos(state.user.uid);
-    //     }
-    // }, [match.path, match.params.listId, actions]);
+    const [sortBy, setSortBy] = useState('');
 
     function handleSubmit(title) {
         actions.createTodo({
@@ -55,6 +41,17 @@ export default function ListPage({ match }) {
         setSelectedTodo(todo);
     }
 
+    function handleSortChange(sort) {
+        setSortBy(sort);
+    }
+
+    const sortFn = {
+        title: (a, b) => a.title.localeCompare(b.title),
+        date: (a, b) => new Date(a.seconds * 1000) - new Date(b.seconds * 1000),
+        important: (a, b) => b.important - a.important,
+        completed: (a, b) => b.completed - a.completed
+    };
+
     const list = state.lists.find(list => list.id === match.params.listId) || { title: 'Задачи' };
     const path = match.path;
 
@@ -71,15 +68,17 @@ export default function ListPage({ match }) {
 
     const getTodosByList = (listId, todos) => todos.filter(todo => todo.listId === listId);
 
+
     const todos = match.params.listId ? getTodosByList(match.params.listId, state.todos) : getTodosByFilter[path](state.todos);
+    const sortedTodos = sortBy ? todos.slice().sort(sortFn[sortBy]) : todos;
 
-
-    // if (!list || !state.todos) return <Spinner />;
 
     return (
         <Layout id="list-page" className="page">
-            <TopAppBar
+            <PageHeader
                 title={list.title}
+                sortBy={sortBy}
+                onSortChange={handleSortChange}
             />
 
             <Layout row>
@@ -106,7 +105,7 @@ export default function ListPage({ match }) {
                 <Layout column className="mdc-side-sheet-app-content">
                     <TodoList
                         list={list}
-                        todos={todos}
+                        todos={sortedTodos}
                         onSelect={handleSelect}
                         onUpdate={handleUpdate}
                         onDelete={handleDelete}

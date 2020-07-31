@@ -64,6 +64,7 @@ export function createTodo(data) {
     // }
     return db.collection('todos').add({
         completed: false,
+        important: false,
         notes: '',
         dueDate: null,
         steps: [],
