@@ -23,7 +23,7 @@ export default function TodoForm({ onSubmit }) {
                     <TextField
                         label="Что нужно сделать..."
                         value={title}
-                        onChange={setTitle}
+                        onChange={(e)=>setTitle(e.target.value)}
                         fullWidth
                     />
                 </ListItem>

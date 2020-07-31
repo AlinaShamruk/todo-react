@@ -36,7 +36,7 @@ export default function reducer(state, action) {
         case 'CREATE_TODO':
             return {
                 ...state,
-                todos: state.todos.push(action.payload.todo)
+                todos: state.todos.concat(action.payload.todo)
             }
 
         case 'UPDATE_TODO':
@@ -56,7 +56,7 @@ export default function reducer(state, action) {
         case 'DELETE_TODO':
             return {
                 ...state,
-                todos: state.todos.filter(todo => todo !== action.payload.todoId)
+                todos: state.todos.filter(todo => todo.id !== action.payload.todoId)
             }
 
         default:

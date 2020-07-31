@@ -1,85 +1,3 @@
-// import React, { useContext } from 'react';
-// import { NavLink } from 'react-router-dom';
-
-// import {
-//     Drawer, DrawerHeader, DrawerContent,
-//     Icon,
-//     List, ListItem, ListItemGraphic, ListItemText, ListDivider,
-//     ListGroup
-// } from 'mdc-react';
-
-
-// import DataContext from '../../contexts/data'
-
-
-// export default function AppDrawer({ lists }) {
-
-//     const { state } = useContext(DataContext);
-
-
-//     return (
-//         <Drawer id="app-drawer">
-//             <DrawerHeader
-//                 title="React Todo"
-//                 subtitle={state.user ? state.user.email : ''}
-//             />
-//             <DrawerContent>
-//                 <ListGroup>
-//                     <List>
-//                         {[
-//                             { title: 'Задачи', icon: 'home', to: './' },
-//                             { title: 'Важно', icon: 'star', to: './important' },
-//                             { title: 'Запланированные', icon: 'event', to: './planned' }
-//                         ].map(item =>
-//                             <ListItem
-//                                 key={item.icon}
-//                                 component={NavLink}
-//                                 to={item.to}
-//                             >
-//                                 <ListItemGraphic>
-//                                     <Icon>{item.icon}</Icon>
-//                                 </ListItemGraphic>
-
-//                                 <ListItemText>
-//                                     {item.title}
-//                                 </ListItemText>
-//                             </ListItem>
-//                         )}
-
-//                     </List>
-
-//                     <ListDivider element="hr" />
-
-//                     <List>
-//                         {lists.map(item =>
-//                             <ListItem
-//                                 key={item.key}
-//                                 component={NavLink}
-//                                 to={item.id}
-//                             >
-//                                 <ListItemGraphic>
-//                                     <Icon>list</Icon>
-//                                 </ListItemGraphic>
-
-//                                 <ListItemText>
-//                                     {item.title}
-//                                 </ListItemText>
-//                             </ListItem>
-//                         )}
-
-//                     </List>
-//                 </ListGroup>
-//             </DrawerContent>
-
-//         </Drawer>
-//     )
-// }
-
-
-
-
-
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
@@ -157,9 +75,9 @@ export default function AppDrawer({ lists }) {
                                     {item.title}
                                 </ListItemText>
 
-                                <ListItemMeta>
+                                {/* <ListItemMeta>
                                     {item.todos.length}
-                                </ListItemMeta>
+                                </ListItemMeta> */}
                             </ListItem>
                         )}
                     </List>

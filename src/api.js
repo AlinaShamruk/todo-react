@@ -19,65 +19,64 @@ export function initAuth(onAuth) {
 
 
 /* DB */
-export function getLists() {
+export function getLists(userId) {
     return db.collection('lists')
+        .where('userId', '==', userId)
         .get()
-        .then(snapshot => {
-            const items = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-
-            return items;
-        });
+        .then(mapSnapshot);
 }
 
-export function getTodos() {
+export function getTodos(userId = '') {
     return db.collection('todos')
-        .where('listId', '==', '')
+        .where('userId', '==', userId)
         .get()
-        .then(snapshot => {
-            const items = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-
-            return items;
-        });
+        .then(mapSnapshot);
 }
+
+// export function getImportantTodos(userId = '') {
+//     return db.collection('todos')
+//         .where('userId', '==', userId)
+//         .where('listId', '==', '')
+//         .where('important', '==', true)
+//         .get()
+//         .then(mapSnapshot);
+// }
+
+// export function getPlannedTodos(userId = '') {
+//     return db.collection('todos')
+//         .where('userId', '==', userId)
+//         .where('listId', '==', '')
+//         .where('dueDate', '>', Date.now() / 1000)
+//         .get()
+//         .then(mapSnapshot);
+// }
 
 export function getListTodos(listId) {
     return db.collection('todos')
         .where('listId', '==', listId)
         .get()
-        .then(snapshot => {
-            const items = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-
-            return items;
-        });
+        .then(mapSnapshot);
 }
 
 export function createTodo(data) {
+    // if(data.listId === undefined){
+    //     delete data.listId; 
+    // }
     return db.collection('todos').add({
-        ...data,
         completed: false,
         notes: '',
         dueDate: null,
-        steps: []
+        steps: [],
+        listId: '',
+        ...data,
     })
         .then(docRef => docRef.get())
-        .then(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        .then(mapDoc);
 }
 
 export function updateTodo(todoId, data) {
     return db.collection('todos').doc(todoId).update(data)
-        .then(() => ({
+        .then(()=>({
             id: todoId,
             ...data
         }));
@@ -86,4 +85,15 @@ export function updateTodo(todoId, data) {
 export function deleteTodo(todoId) {
     return db.collection('todos').doc(todoId).delete()
         .then(() => todoId);
+}
+
+function mapSnapshot(snapshot) {
+   return snapshot.docs.map(mapDoc);
+}
+
+function mapDoc(doc){
+    return {
+        id: doc.id,
+        ...doc.data()
+    };
 }

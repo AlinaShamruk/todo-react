@@ -15,7 +15,7 @@ export default function TodoListItem({
     onSelect
 }) {
     function handleChange(completed) {
-        onUpdate(todo.id, { completed });
+        onUpdate(todo.id, { completed});
     }
 
     return (
@@ -23,7 +23,7 @@ export default function TodoListItem({
             <ListItemGraphic>
                 <Checkbox
                     checked={todo.completed}
-                    onChange={handleChange}
+                    onChange={() => handleChange(todo.id)}
                 />
             </ListItemGraphic>
 
@@ -33,6 +33,13 @@ export default function TodoListItem({
                 <IconButton onClick={() => onDelete(todo.id)}>
                     <Icon>delete</Icon>
                 </IconButton>
+
+
+                <IconButton onClick={() => onUpdate(todo.id, { important: !todo.important })}>
+                    <Icon>{todo.important ? 'star' : 'star_bordered'}</Icon>
+                </IconButton>
+
+
             </ListItemMeta>
         </ListItem>
     );

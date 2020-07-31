@@ -1,8 +1,9 @@
 export function bindActions(actions, dispatch) {
     return Object.entries(actions).reduce((result, [key, fn]) => {
         result[key] = (...args) => {
-            const action = fn(...args);
 
+            const action = fn(...args);
+            console.log(key, action)
             if (typeof action.then === 'function') {
                 action.then(dispatch);
             } else if (typeof action === 'function') {
@@ -19,7 +20,7 @@ export function bindActions(actions, dispatch) {
 }
 
 export function combineReducers(reducers) {
-    return function(state, action) {
+    return function (state, action) {
         return Object.entries(reducers).reduce((newState, [key, reducer]) => {
             newState[key] = reducer(state[key], action);
 

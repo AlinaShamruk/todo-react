@@ -84,7 +84,7 @@ export default function AuthPage() {
                         label="Электронная почта"
                         required
                         fullWidth
-                        onChange={setEmail}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <TextField
@@ -93,7 +93,7 @@ export default function AuthPage() {
                         value={password}
                         required
                         fullWidth
-                        onChange={setPassword}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </CardSection>
 
