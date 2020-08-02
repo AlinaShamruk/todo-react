@@ -34,12 +34,11 @@ export default function App() {
                 <AppDrawer
                     lists={state.lists}
                 />
-
                 <AppContent>
                     <Switch>
                         <Route exact path="/" component={ListPage} />
                         <Route exact path="/important" component={ListPage} />
-                        <Route exact path="/planned" component={ListPage} />
+                        <Route exact path="/completed" component={ListPage} />
                         <Route path="/:listId/:todoId?" component={ListPage} />
                     </Switch>
                 </AppContent>

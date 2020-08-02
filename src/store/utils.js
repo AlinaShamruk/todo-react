@@ -1,7 +1,6 @@
 export function bindActions(actions, dispatch) {
     return Object.entries(actions).reduce((result, [key, fn]) => {
         result[key] = (...args) => {
-
             const action = fn(...args);
             console.log(key, action)
             if (typeof action.then === 'function') {
@@ -14,7 +13,6 @@ export function bindActions(actions, dispatch) {
 
             return action;
         };
-
         return result;
     }, {});
 }

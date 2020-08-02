@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Icon,
     IconButton,
@@ -19,7 +19,6 @@ import './index.scss';
 export default function ListPage({ match }) {
     const { state, actions } = useStore();
     const [selectedTodo, setSelectedTodo] = useState(null);
-    const [sortBy, setSortBy] = useState('');
 
     function handleSubmit(title) {
         actions.createTodo({
@@ -42,45 +41,46 @@ export default function ListPage({ match }) {
     }
 
     function handleSortChange(sort) {
-        setSortBy(sort);
+        actions.updateList(list.id, { sort })
+    }
+
+    const path = match.path;
+    const list = state.lists.find(list => list.id === match.params.listId) || { title: 'Задачи' };
+    if (path === '/') {
+        list.title = "Задачи"
+    } else if (path === '/important') {
+        list.title = 'Важно'
+    } else if (path === '/completed') {
+        list.title = 'Завершенные'
     }
 
     const sortFn = {
         title: (a, b) => a.title.localeCompare(b.title),
-        date: (a, b) => new Date(a.seconds * 1000) - new Date(b.seconds * 1000),
         important: (a, b) => b.important - a.important,
         completed: (a, b) => b.completed - a.completed
     };
 
-    const list = state.lists.find(list => list.id === match.params.listId) || { title: 'Задачи' };
-    const path = match.path;
-
-    // let todos = list ? state.todos.filter(todo => todo.listId === list.id) : state.todos;
-
-
-
     const getTodosByFilter = ({
         '/': todos => todos,
         '/important': todos => todos.filter(todo => todo.important),
-        '/planned': todos => todos.filter(todo => todo.dueDate),
+        '/completed': todos => todos.filter(todo => todo.completed),
 
     });
 
     const getTodosByList = (listId, todos) => todos.filter(todo => todo.listId === listId);
 
-
     const todos = match.params.listId ? getTodosByList(match.params.listId, state.todos) : getTodosByFilter[path](state.todos);
-    const sortedTodos = sortBy ? todos.slice().sort(sortFn[sortBy]) : todos;
+    const sortedTodos = list.sort ? todos.slice().sort(sortFn[list.sort]) : todos;
 
+    console.log(list.sort)
 
     return (
         <Layout id="list-page" className="page">
             <PageHeader
                 title={list.title}
-                sortBy={sortBy}
+                sortBy={list.sort}
                 onSortChange={handleSortChange}
             />
-
             <Layout row>
                 <SideSheet
                     open={selectedTodo}

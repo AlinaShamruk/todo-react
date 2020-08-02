@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
+    Button,
     Drawer, DrawerHeader, DrawerContent,
     Icon,
     IconButton,
     Layout,
-    List, ListItem, ListItemGraphic, ListItemText, ListItemMeta,
+    List, ListItem, ListItemGraphic, ListItemText,ListItemMeta,
     ListDivider,
     ListGroup,
+    TextField,
     Typography
 } from 'mdc-react';
 
 import useStore from '../../hooks/store';
 
+import './index.scss'
+
 export default function AppDrawer({ lists }) {
     const { state, actions } = useStore();
+    const [isListFormOpen, setListFormOpen] = useState(false);
+    const [listTitle, setListTitle] = useState('');    
+
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        actions.createList({
+            title: listTitle,
+            userId: state.user.uid
+        }).then(() => {
+            setListTitle('');
+            setListFormOpen(false);
+        })
+    };
 
     return (
         <Drawer
@@ -37,7 +55,7 @@ export default function AppDrawer({ lists }) {
                         {[
                             { title: 'Задачи', icon: 'home', to: '/', exact: true },
                             { title: 'Важно', icon: 'star', to: '/important' },
-                            { title: 'Запланированные', icon: 'event', to: '/planned' },
+                            { title: 'Завершенные', icon: 'event', to: '/completed' },
                         ].map(item =>
                             <ListItem
                                 key={item.icon}
@@ -74,13 +92,32 @@ export default function AppDrawer({ lists }) {
                                 <ListItemText>
                                     {item.title}
                                 </ListItemText>
-
-                                {/* <ListItemMeta>
-                                    {item.todos.length}
-                                </ListItemMeta> */}
+                                <ListItemMeta>
+                                    <IconButton onClick={()=>actions.deleteList(item.id)}>
+                                        <Icon>delete</Icon>
+                                    </IconButton>
+                                </ListItemMeta>
                             </ListItem>
                         )}
                     </List>
+                    <Layout className="open-add-input">
+                        {isListFormOpen ?
+                            <form onSubmit={handleSubmit}>
+                                <TextField
+                                    placeholder="Новый список"
+                                    value={listTitle}
+                                    onChange={(e) => setListTitle(e.target.value)}
+                                    fullWidth
+
+                                />
+                            </form>
+                            :
+                            <Button
+                                icon={<Icon>add</Icon>}
+                                onClick={() => setListFormOpen(true)}
+                            >Добавить список</Button>
+                        }
+                    </Layout>
                 </ListGroup>
             </DrawerContent>
         </Drawer>

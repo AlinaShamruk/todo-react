@@ -21,9 +21,9 @@ export default function TodoForm({ onSubmit }) {
             <List>
                 <ListItem>
                     <TextField
-                        label="Что нужно сделать..."
+                        placeholder="Что нужно сделать..."
                         value={title}
-                        onChange={(e)=>setTitle(e.target.value)}
+                        onChange={(e) => setTitle(e.target.value)}
                         fullWidth
                     />
                 </ListItem>

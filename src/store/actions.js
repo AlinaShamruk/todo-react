@@ -38,6 +38,36 @@ export function getLists(userId) {
         }));
 }
 
+export function createList(...args) {
+    return api.createList(...args)
+        .then(list => ({
+            type: 'CREATE_LIST',
+            payload: {
+                list
+            }
+        }));
+}
+
+// export function updateList(...args) {
+//     return api.updateList(...args)
+//         .then(list => ({
+//             type: 'UPDATE_LIST',
+//             payload: {
+//                 list
+//             }
+//         }));
+// }
+
+export function deleteList(...args) {
+    return api.deleteList(...args)
+        .then(listId => ({
+            type: 'DELETE_LIST',
+            payload: {
+                listId
+            }
+        }));
+}
+
 export function getTodos(userId) {
     return api.getTodos(userId)
         .then(todos => ({
@@ -47,26 +77,6 @@ export function getTodos(userId) {
             }
         }));
 }
-
-// export function getImportantTodos(userId) {
-//     return api.getImportantTodos(userId)
-//         .then(todos => ({
-//             type: 'GET_TODOS',
-//             payload: {
-//                 todos
-//             }
-//         }));
-// }
-
-// export function getPlannedTodos(userId) {
-//     return api.getPlannedTodos(userId)
-//         .then(todos => ({
-//             type: 'GET_TODOS',
-//             payload: {
-//                 todos
-//             }
-//         }));
-// }
 
 export function getListTodos(listId) {
     return api.getListTodos(listId)

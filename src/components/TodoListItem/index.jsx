@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    Checkbox,
     Icon,
     IconButton,
     ListItem, ListItemGraphic, ListItemText, ListItemMeta
@@ -14,16 +13,13 @@ export default function TodoListItem({
     onDelete,
     onSelect
 }) {
-    function handleChange(completed) {
-        onUpdate(todo.id, { completed});
-    }
-
     return (
         <ListItem className="todo-list-item">
             <ListItemGraphic>
-                <Checkbox
+                <input
+                    type='checkbox'
                     checked={todo.completed}
-                    onChange={() => handleChange(todo.id)}
+                    onChange={() => onUpdate(todo.id, { completed: !todo.completed })}
                 />
             </ListItemGraphic>
 
@@ -34,11 +30,9 @@ export default function TodoListItem({
                     <Icon>delete</Icon>
                 </IconButton>
 
-
                 <IconButton onClick={() => onUpdate(todo.id, { important: !todo.important })}>
                     <Icon>{todo.important ? 'star' : 'star_bordered'}</Icon>
                 </IconButton>
-
 
             </ListItemMeta>
         </ListItem>

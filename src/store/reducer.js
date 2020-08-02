@@ -13,12 +13,36 @@ export default function reducer(state, action) {
                 user: null
             };
 
-
-
         case 'GET_LISTS':
             return {
                 ...state,
                 lists: action.payload.lists
+            };
+
+        case 'CREATE_LIST':
+            return {
+                ...state,
+                lists: state.lists.concat(action.payload.list)
+            };
+
+        // case 'UPDATE_LIST':
+        //     return {
+        //         ...state,
+        //         lists: state.lists.map(list => {
+        //             if (list.id === action.payload.list.id) {
+        //                 return {
+        //                     ...list,
+        //                     ...action.payload.list
+        //                 }
+        //             }
+        //             return list;
+        //         })
+        //     };
+
+        case 'DELETE_LIST':
+            return {
+                ...state,
+                lists: state.lists.filter(list => list.id !== action.payload.listId)
             };
 
         case 'GET_TODOS':
@@ -31,13 +55,13 @@ export default function reducer(state, action) {
             return {
                 ...state,
                 todos: action.payload.todos
-            }
+            };
 
         case 'CREATE_TODO':
             return {
                 ...state,
                 todos: state.todos.concat(action.payload.todo)
-            }
+            };
 
         case 'UPDATE_TODO':
             return {
@@ -51,13 +75,13 @@ export default function reducer(state, action) {
                     }
                     return todo
                 })
-            }
+            };
 
         case 'DELETE_TODO':
             return {
                 ...state,
                 todos: state.todos.filter(todo => todo.id !== action.payload.todoId)
-            }
+            };
 
         default:
             return state;

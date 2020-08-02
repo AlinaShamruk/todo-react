@@ -1,40 +1,3 @@
-// import React, { useState } from 'react';
-
-// import { actions } from '../../store';
-
-// export default function LoginPage({ history }) {
-//     const [login, setLogin] = useState('');
-//     const [password, setPassword] = useState('');
-
-//     function handleSubmit(event) {
-//         event.preventDefault();
-
-//         actions.loginUser(login, password);
-//     };
-
-//     return (
-//         <div>
-//             <form onSubmit={handleSubmit}>
-//                 <input
-//                     type="email"
-//                     value={login}
-//                     onChange={event => setLogin(event.target.value)}
-//                     required
-//                 />
-//                 <input
-//                     type="password"
-//                     value={password}
-//                     onChange={event => setPassword(event.target.value)}
-//                     required
-//                 />
-//                 <button type="submit">Войти</button>
-//             </form>
-//         </div>
-//     );
-// }
-
-
-
 import React, { useState } from 'react';
 import {
     Button,
@@ -81,15 +44,14 @@ export default function AuthPage() {
                     <TextField
                         type="email"
                         value={email}
-                        label="Электронная почта"
+                        placeholder="Электронная почта"
                         required
                         fullWidth
                         onChange={(e) => setEmail(e.target.value)}
                     />
-
                     <TextField
                         type="password"
-                        label="Пароль"
+                        placeholder="Пароль"
                         value={password}
                         required
                         fullWidth
@@ -97,7 +59,7 @@ export default function AuthPage() {
                     />
                 </CardSection>
 
-                <CardActions>
+                <CardActions className="but">
                     <Button onClick={handleLogInButtonClick}>Войти</Button>
                     <Button onClick={handleRegisterButtonClick}>Зарегистрироваться</Button>
                 </CardActions>

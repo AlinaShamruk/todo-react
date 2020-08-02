@@ -1,4 +1,5 @@
 .todo-list-item {
+    input{cursor: pointer}
     background-color: white;
     margin-top: 2px;
     .mdc-list-item__graphic {
@@ -9,4 +10,5 @@
     .mdc-list-item__text {
         flex: 1;
     }
+
 }

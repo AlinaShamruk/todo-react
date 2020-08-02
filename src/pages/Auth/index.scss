@@ -1,3 +1,10 @@
   #login-page {
-      margin: auto;
+    text-align: center;
+    margin: auto;
+
+  }
+  .but{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
