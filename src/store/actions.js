@@ -48,15 +48,15 @@ export function createList(...args) {
         }));
 }
 
-// export function updateList(...args) {
-//     return api.updateList(...args)
-//         .then(list => ({
-//             type: 'UPDATE_LIST',
-//             payload: {
-//                 list
-//             }
-//         }));
-// }
+export function updateList(...args) {
+    return api.updateList(...args)
+        .then(list => ({
+            type: 'UPDATE_LIST',
+            payload: {
+                list
+            }
+        }));
+}
 
 export function deleteList(...args) {
     return api.deleteList(...args)

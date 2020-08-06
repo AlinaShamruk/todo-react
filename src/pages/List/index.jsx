@@ -72,7 +72,7 @@ export default function ListPage({ match }) {
     const todos = match.params.listId ? getTodosByList(match.params.listId, state.todos) : getTodosByFilter[path](state.todos);
     const sortedTodos = list.sort ? todos.slice().sort(sortFn[list.sort]) : todos;
 
-    console.log(list.sort)
+
 
     return (
         <Layout id="list-page" className="page">

@@ -37,13 +37,13 @@ export function createList(data) {
         .then(mapDoc);
 }
 
-// export function updateList(listId, data) {
-//     return db.collection('lists').doc(listId).update(data)
-//         .then(() => ({
-//             id: listId,
-//             ...data
-//         }));
-// }
+export function updateList(listId, data) {
+    return db.collection('lists').doc(listId).update(data)
+        .then(() => ({
+            id: listId,
+            ...data
+        }));
+}
 
 export function deleteList(listId) {
     return db.collection('lists').doc(listId).delete()

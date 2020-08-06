@@ -25,19 +25,19 @@ export default function reducer(state, action) {
                 lists: state.lists.concat(action.payload.list)
             };
 
-        // case 'UPDATE_LIST':
-        //     return {
-        //         ...state,
-        //         lists: state.lists.map(list => {
-        //             if (list.id === action.payload.list.id) {
-        //                 return {
-        //                     ...list,
-        //                     ...action.payload.list
-        //                 }
-        //             }
-        //             return list;
-        //         })
-        //     };
+        case 'UPDATE_LIST':
+            return {
+                ...state,
+                lists: state.lists.map(list => {
+                    if (list.id === action.payload.list.id) {
+                        return {
+                            ...list,
+                            ...action.payload.list
+                        }
+                    }
+                    return list;
+                })
+            };
 
         case 'DELETE_LIST':
             return {

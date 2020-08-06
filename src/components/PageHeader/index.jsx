@@ -4,7 +4,7 @@ import {
     TopAppBar
 } from 'mdc-react';
 
-export default function PageHeader({ title, onSortChange }) {
+export default function PageHeader({ title, onSortChange, sortBy }) {
     return (
         <>
             <TopAppBar
@@ -13,9 +13,9 @@ export default function PageHeader({ title, onSortChange }) {
             {title === 'Задачи' || title === 'Важно' || title === 'Завершенные' ?
                 <div></div> :
                 <div>
-                    <MenuItem onClick={() => onSortChange('title')}>По названию</MenuItem>
-                    <MenuItem onClick={() => onSortChange('completed')}>По завершенным</MenuItem>
-                    <MenuItem onClick={() => onSortChange('important')}>По важным</MenuItem>
+                    <MenuItem onClick={() => onSortChange('title')} selected={sortBy === 'title'}>По названию</MenuItem>
+                    <MenuItem onClick={() => onSortChange('completed')} selected={sortBy === 'completed'}>По завершенным</MenuItem>
+                    <MenuItem onClick={() => onSortChange('important')} selected={sortBy === 'important'}>По важным</MenuItem>
                 </div>
             }
         </>
